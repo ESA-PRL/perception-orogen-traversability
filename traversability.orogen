@@ -10,7 +10,7 @@ import_types_from "traversabilityTypes.hpp"
 # library's pkg-config name) and then the header can be used. Following Rock
 # conventions, a common use-case would be:
 #
-# using_library "traversability"
+using_library "traversability"
 # import_types_from "traversability/CustomType.hpp"
 
 # If this project uses data types that are defined in other oroGen projects,
