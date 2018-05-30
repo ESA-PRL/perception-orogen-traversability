@@ -5,6 +5,14 @@
 
 #include "traversability/TaskBase.hpp"
 
+#include <opencv/cv.h>
+#include <opencv2/highgui/highgui.hpp> // -> Needed?
+
+#include <base/samples/Frame.hpp>
+#include <frame_helper/FrameHelper.h>
+
+#include <traversability/traversability.hpp>
+
 namespace traversability{
 
     /*! \class Task
@@ -29,7 +37,11 @@ tasks/Task.cpp, and will be put in the traversability namespace.
 	friend class TaskBase;
     protected:
 
-
+    Traversability trav;
+    base::samples::DistanceImage  elevation_map;
+    base::samples::frame::Frame   local2global;
+    base::samples::frame::Frame   traversability_map;
+    base::samples::RigidBodyState pose;
 
     public:
         /** TaskContext constructor for Task

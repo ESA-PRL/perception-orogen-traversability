@@ -11,12 +11,14 @@ import_types_from "traversabilityTypes.hpp"
 # conventions, a common use-case would be:
 #
 using_library "traversability"
+using_library "frame_helper"
+using_library "opencv"
 # import_types_from "traversability/CustomType.hpp"
 
 # If this project uses data types that are defined in other oroGen projects,
 # these projects should be imported there as well.
 import_types_from "std"
-# import_types_from "base"
+import_types_from "base"
 
 # Declare a new task context (i.e., a component)
 #
@@ -29,7 +31,23 @@ task_context "Task" do
 
     # A configuration property (here, a std::string). Its value can be retrieved
     # in the C++ code with # _config_value.get() and _config_value.set(new_value).
-    property "config_value", "/std/string"
+    
+    # map parameters
+    property("map_size_width","float",5.0).doc("Size of the map width in meters")
+    property("map_size_height","float",5.0).doc("Size of the map height in meters")
+    property("map_resolution","float",0.05).doc("Resolution of each cell in meters")
+    property("slope_map_scale","int",5).doc("How many normal cell a slope map cell will contain")
+
+    # obstacle detection parameters
+    property("laplacian_kernel_size","int",9).doc("Size of the kernel used in the laplacian to detect rocks edges")
+    property("laplacian_threshold","float",100.0).doc("Threshold of the laplacian to detect rocks edges. It is not zet tied to a physical property.")
+    property("rover_obstacle_clearance","float",0.12).doc("Obstacles the rover can tolerate when there is no sinkage [m]")
+    property("rover_slope_gradeability","float",0.33).doc("Slope the rover can travel in nominal case [rad]")
+    property("obstacle_kernel_size","int",3).doc("Kernel size to dilate obstacle first time [cells]")
+    property("obstacle_iterations","int",2).doc("First obstacle dilation iterations")
+    property("obstacle_vicinity_kernel_size","int",3).doc("Kernel size to dilate obstacle second time [cells]")
+    property("obstacle_vicinity_iterations","int",3).doc("Second obstacle dilation iterations (area surrounding an obstacle)")
+    property("robot_size","float",0.7).doc("in meters, needed for obstacle dilation")
 
     # An input port, i.e. an object from which the component gets data from
     # other components' outputs
@@ -37,19 +55,23 @@ task_context "Task" do
     # Data can be retrieved using _input.read(value), which returns true if data
     # was available, and false otherwise. _input.connected() returns if this
     # input is connected to an output or not.
-    input_port "input", "/std/string"
+    input_port "elevation_map", "/base/samples/DistanceImage"
+    
+    input_port "pose", "/base/samples/RigidBodyState"
+    input_port "local2global_orientation", "/base/samples/frame/Frame"
 
     # An output port, i.e. an object to which the component pushes data so that
     # it is transmitted to other components' inputs
     #
     # Data can be written using _output.write(value). _output.connected() returns
     # if this output is connected to an input or not.
-    output_port "output", "int"
+    output_port "traversability_map", "/base/samples/frame/Frame"
 
     # If you want that component's updateHook() to be executed when the "input"
     # port gets data, uncomment this and comment the 'periodic' line
     # port_driven "input"
     # By default, the task will be periodic with a period of 0.1
-    periodic 0.1
+    #periodic 0.1
+    port_driven
 end
 

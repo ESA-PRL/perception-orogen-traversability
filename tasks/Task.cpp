@@ -28,6 +28,9 @@ bool Task::configureHook()
 {
     if (! TaskBase::configureHook())
         return false;
+
+    trav.configureTraversability(_rover_obstacle_clearance.value(),_rover_slope_gradeability.value());
+    
     return true;
 }
 bool Task::startHook()
@@ -39,6 +42,27 @@ bool Task::startHook()
 void Task::updateHook()
 {
     TaskBase::updateHook();
+    
+    if (_elevation_map.read(elevation_map) == RTT::NewData)
+    {
+        cv::Mat traversability;
+        trav.setElevationMap(elevation_map.data, elevation_map.width, elevation_map.height);
+        traversability = trav.computeTraversability();
+        frame_helper::FrameHelper::copyMatToFrame(traversability, traversability_map);
+        _traversability_map.write(traversability_map);
+    }
+
+    if (_local2global_orientation.read(local2global) == RTT::NewData)
+    {
+        if (_pose.read(pose) == RTT::NewData)
+        {
+            cv::Mat local2global_mask;
+            local2global_mask.create(local2global.size.width, local2global.size.height, CV_8UC1);
+            local2global_mask = cv::Scalar(1);
+            trav.local2globalOrientation(frame_helper::FrameHelper::convertToCvMat(local2global), local2global_mask, pose.getYaw());
+        }
+    }
+
 }
 void Task::errorHook()
 {
