@@ -56,10 +56,10 @@ void Task::updateHook()
     {
         if (_pose.read(pose) == RTT::NewData)
         {
-            cv::Mat local2global_mask;
-            local2global_mask.create(local2global.size.width, local2global.size.height, CV_8UC1);
-            local2global_mask = cv::Scalar(1);
-            trav.local2globalOrientation(frame_helper::FrameHelper::convertToCvMat(local2global), local2global_mask, pose.getYaw());
+            cv::Mat traversability;
+            traversability = trav.local2globalOrientation(frame_helper::FrameHelper::convertToCvMat(local2global), pose.getYaw());
+            frame_helper::FrameHelper::copyMatToFrame(traversability, traversability_map);
+            _traversability_map.write(traversability_map);
         }
     }
 
