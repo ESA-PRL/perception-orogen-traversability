@@ -29,7 +29,7 @@ bool Task::configureHook()
     if (! TaskBase::configureHook())
         return false;
 
-    trav.configureTraversability(_rover_obstacle_clearance.value(),_rover_slope_gradeability.value());
+    trav.configureTraversability(_rover_obstacle_clearance.value(),_rover_slope_gradeability.value(), _robot_size.value(), _map_resolution.value());
     
     return true;
 }
