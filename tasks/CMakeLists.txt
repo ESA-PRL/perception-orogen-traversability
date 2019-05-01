@@ -1,12 +1,8 @@
-# Generated from orogen/lib/orogen/templates/tasks/CMakeLists.txt
-
 include(traversabilityTaskLib)
 ADD_LIBRARY(${TRAVERSABILITY_TASKLIB_NAME} SHARED 
     ${TRAVERSABILITY_TASKLIB_SOURCES})
 add_dependencies(${TRAVERSABILITY_TASKLIB_NAME}
     regen-typekit)
-
-
 
 TARGET_LINK_LIBRARIES(${TRAVERSABILITY_TASKLIB_NAME}
     ${OrocosRTT_LIBRARIES}
@@ -23,4 +19,3 @@ INSTALL(TARGETS ${TRAVERSABILITY_TASKLIB_NAME}
 
 INSTALL(FILES ${TRAVERSABILITY_TASKLIB_HEADERS}
     DESTINATION include/orocos/traversability)
-
