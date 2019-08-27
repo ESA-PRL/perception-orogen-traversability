@@ -27,7 +27,8 @@ task_context "Task" do
     property("obstacle_iterations","int",2).doc("First obstacle dilation iterations")
     property("obstacle_vicinity_kernel_size","int",3).doc("Kernel size to dilate obstacle second time [cells]")
     property("obstacle_vicinity_iterations","int",3).doc("Second obstacle dilation iterations (area surrounding an obstacle)")
-    property("robot_size","float",0.7).doc("in meters, needed for obstacle dilation")
+    property("robot_size","float",0.7).doc("Robot size for square kernel used for final traversability map dilation [m]")
+    property("dilation_iterations","int",2).doc("Final traversability map dilation iterations")
 
     input_port "elevation_map", "/base/samples/DistanceImage"
     input_port "pose", "/base/samples/RigidBodyState"

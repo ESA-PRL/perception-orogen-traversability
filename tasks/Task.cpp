@@ -13,10 +13,18 @@ bool Task::configureHook()
         return false;
     }
 
-    trav.configureTraversability(_rover_obstacle_clearance.value(),
-                                 _rover_slope_gradeability.value(),
-                                 _robot_size.value(),
-                                 _map_resolution.value());
+    trav.configureTraversability(_map_resolution.get(),
+                                 _slope_map_scale.get(),
+                                 _rover_slope_gradeability.get(),
+                                 _rover_obstacle_clearance.get(),
+                                 _laplacian_kernel_size.get(),
+                                 _laplacian_threshold.get(),
+                                 _obstacle_kernel_size.get(),
+                                 _obstacle_iterations.get(),
+                                 _obstacle_vicinity_kernel_size.get(),
+                                 _obstacle_vicinity_iterations.get(),
+                                 _robot_size.get(),
+                                 _dilation_iterations.get());
 
     return true;
 }
