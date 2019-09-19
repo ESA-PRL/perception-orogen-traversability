@@ -16,10 +16,6 @@ class Task : public TaskBase
 
   protected:
     Traversability trav;
-    base::samples::DistanceImage elevation_map;
-    base::samples::frame::Frame local2global;
-    base::samples::frame::Frame traversability_map;
-    base::samples::RigidBodyState pose;
 
   public:
     Task(std::string const& name = "traversability::Task");

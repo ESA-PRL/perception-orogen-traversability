@@ -35,6 +35,10 @@ void Task::updateHook()
 {
     TaskBase::updateHook();
 
+    base::samples::DistanceImage elevation_map;
+    base::samples::frame::Frame traversability_map;
+    base::samples::RigidBodyState pose;
+
     if (_elevation_map.read(elevation_map) == RTT::NewData)
     {
         cv::Mat traversability;
@@ -43,6 +47,8 @@ void Task::updateHook()
         frame_helper::FrameHelper::copyMatToFrame(traversability, traversability_map);
         _traversability_map.write(traversability_map);
     }
+
+    base::samples::frame::Frame local2global;
 
     if (_local2global_orientation.read(local2global) == RTT::NewData)
     {
