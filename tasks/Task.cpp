@@ -45,6 +45,7 @@ void Task::updateHook()
         trav.setElevationMap(elevation_map.data, elevation_map.width, elevation_map.height);
         traversability = trav.computeTraversability();
         frame_helper::FrameHelper::copyMatToFrame(traversability, traversability_map);
+        traversability_map.time = base::Time::now();
         _traversability_map.write(traversability_map);
     }
 
@@ -58,6 +59,7 @@ void Task::updateHook()
             traversability = trav.local2globalOrientation(
                 frame_helper::FrameHelper::convertToCvMat(local2global), pose.getYaw());
             frame_helper::FrameHelper::copyMatToFrame(traversability, traversability_map);
+            traversability_map.time = base::Time::now();
             _traversability_map.write(traversability_map);
         }
     }
