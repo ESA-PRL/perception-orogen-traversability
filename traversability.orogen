@@ -4,7 +4,6 @@ import_types_from "traversabilityTypes.hpp"
 
 using_library "traversability"
 using_library "frame_helper"
-using_library "opencv"
 
 import_types_from "std"
 import_types_from "base"

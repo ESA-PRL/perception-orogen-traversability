@@ -1,9 +1,7 @@
 #pragma once
 
 #include <frame_helper/FrameHelper.h>
-#include <opencv/cv.h>
 #include <base/samples/Frame.hpp>
-#include <opencv2/highgui/highgui.hpp>  // -> Needed?
 #include <traversability/traversability.hpp>
 #include "traversability/TaskBase.hpp"
 
